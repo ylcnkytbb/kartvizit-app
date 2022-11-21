@@ -10,29 +10,29 @@ import { Card } from '../models/card';
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
+  [x: string]: any;
 
   cards!: Card[];
+  
 
   constructor(
     public dialog: MatDialog,
     private cardService: CardService
   ) { }
 
-  ngOnInit(): any { //void: bu fonksiyon bir değer döndürmüyor
-  this.cardService.getCards();
+  ngOnInit(): void { 
+ this.cardService.getCards()
+ .subscribe((res: Card[]) => {
+  console.log(res);
+  this.cards = res;
+
+});
   }
 
   openAddCardModal(): void {
     this.dialog.open(CardModalComponent, {
       width:'400px'
     }); //hangi componenti açmak istiyorsak fonk içine onu yazıyoruz
-
-    getCards(): void {
-      this.cardService.getCards()
-      .subscribe((res: Card[]) => {
-        this.cards = res;
-
-      });
-    }
   }
 }
+
